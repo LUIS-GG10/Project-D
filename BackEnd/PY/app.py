@@ -1,41 +1,52 @@
-from flask import Flask, request, jsonify
+from flask import Flask, logging, request, jsonify
 import json
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# Ruta del archivo JSON
-json_file_path = "Prueba.json"
+# Configure the database connection
+__tablename__ = 'users'
+__table_args__ = {'schema': 'public'}
+host='localhost'
+user='postgres'
+password='Password1'
+database='DB_Daan'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Password1@localhost/DB_Daan'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Función para cargar el JSON
-def load_json():
-    with open(json_file_path, 'r', encoding='utf-8') as file:
-        return json.load(file)
+# Initialize the SQLAlchemy extension
+db = SQLAlchemy(app)
+# Enable logging for SQL queries
 
-# Ruta para buscar usuarios por nombre de usuario y/o correo electrónico
+
+# Define the database model
+class User(db.Model):
+    __tablename__ = 'users'  # Ensure this matches your table name in the database
+    Prid = db.Column(db.String(7), primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    Password = db.Column(db.String(25), unique=True, nullable=False)
+    role = db.Column(db.String(1), nullable=False)  # Assuming role is a single character
+
+    def __repr__(self):
+        return f'<users {self.username}>'
+
+# Search for users
 @app.route('/search', methods=['GET'])
 def search_users():
-    data = load_json()
-    prind = "Kxcr234"
-    password = "Hersdsw124%"
-    
-    results = data
-    
-    if prind:
-        results = [user for user in results if prind.lower() in user['Prid'].lower()]
-    
-    if password:
-        results = [user for user in results if password.lower() in user['Password'].lower()]
-    
-    if results:
-        return "Bienvenido"
-    else:
-        return "No valido"
-    return jsonify(results)
+    Prid = "ABC1234"  
+    Password = "mysecret"
 
-# Ruta para mostrar todos los usuarios
-@app.route('/users', methods=['GET'])
-def get_users():
-    data = load_json()
-    return jsonify(data)
+    query = User.query
+
+    if Prid:
+        query = query.filter(User.Prid.like(f'%{Prid}%'))
+    
+    if Password:
+        query = query.filter(User.Password.like(f'%{Password}%'))
+    
+    users = query.all()
+    return jsonify([{'Prid': user.Prid, 'username': user.username, 'Password': user.Password, 'role': user.role} for user in users])
+        
+# Start the Flask app
 if __name__ == '__main__':
     app.run(debug=True)
