@@ -1,0 +1,15 @@
+.Img_L{
+    height: 5%;
+    width: 15%;
+    padding-left: 1%;
+    padding-bottom: 1%;
+    padding-top: .5%;
+}
+.esquinada {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+mat-toolbar{
+    background-color: white;
+}

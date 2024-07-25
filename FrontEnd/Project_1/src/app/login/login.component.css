@@ -1,0 +1,18 @@
+
+.login{
+    background-image: url('ovulo.jpg');
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: vw;
+    height: 100vh;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+  } 
+  
+  .container{
+    max-width: 350px;
+    padding: 40px 40px;
+  }
