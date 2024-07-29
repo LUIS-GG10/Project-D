@@ -6,6 +6,8 @@ import { MatFormField } from "@angular/material/form-field";
 import { MatLabel } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { merge } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
 
@@ -17,21 +19,28 @@ import { Router } from '@angular/router';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
+onAccion() {
+this.entrar = true;
+this.updateErrorMessage();
+if (this.PRID.valid && this.Password.valid) {
+  this.sendData();
+  this.router.navigate(['Principal']);
+}
+}
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required]);
   readonly Password = new FormControl('', [Validators.required]);
   errorMessage = signal('');
-
-  onAccion() {
-  this.entrar = true;
-  this.updateErrorMessage();
-  if(this.PRID.valid && this.Password.valid){
-    this.router.navigate(['/cmbiar']); }
+  constructor(private router: Router, private http: HttpClient) {
+    // Aquí puedes agregar cualquier lógica adicional necesaria
   }
-  constructor(private router: Router) {
-   
+    merge(this.PRID.statusChanges, this.PRID.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
+    merge(this.Password.statusChanges, this.Password.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
   }
-
   updateErrorMessage() {
     if(this.entrar==true){
      if (this.PRID.hasError('required') || this.Password.hasError('required')) {
@@ -52,6 +61,21 @@ export class FormularioComponent {
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
+
+  sendData() {
+    // Encode the credentials (if necessary)
+    const PRID = this.PRID.value;
+    const Password = this.Password.value;
+  
+    // Construct the request URL with the parameters
+    const url = `http://127.0.0.1:5000/api/Users/${PRID},${Password}`;
+  
+    // Make the GET request
+    this.http.get(url).subscribe(response => {
+      console.log('Success:', response);
+    }, error => {
+      console.error('Error:', error);
+    });
   }
  
 }
