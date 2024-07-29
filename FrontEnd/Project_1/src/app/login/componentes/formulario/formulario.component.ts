@@ -9,6 +9,7 @@ import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { merge } from 'rxjs';
 import {MatIconModule} from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -18,9 +19,11 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
+ 
 onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
+this.router.navigate(['Principal']);
 }
 
   entrar = false;
@@ -28,7 +31,8 @@ this.updateErrorMessage();
   readonly Password = new FormControl('', [Validators.required,Validators.minLength(7), Validators.pattern(/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]);
   errorMessagePRID = signal('');
   errorMessage = signal('');
-  constructor() {
+  constructor(private router: Router) {
+      
     merge(this.PRID.statusChanges, this.PRID.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());

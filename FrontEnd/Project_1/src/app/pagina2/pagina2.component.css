@@ -1,0 +1,13 @@
+.pagina2{
+    background-image: url('bacterias.jpg');
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: vw;
+    height: 100vh;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+  } 
+  
