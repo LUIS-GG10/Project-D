@@ -1,5 +1,6 @@
 from flask import Blueprint , jsonify, request
 import uuid
+from Encrypt.Encrypt import encrypt_data,decrypt_data
 
 #Models
 from models.UserModels import UserModel
@@ -19,7 +20,8 @@ def get_users():
 @main.route('/<prid>,<password>')
 def get_user(prid,password):
     try:
-        user=UserModel.search_Users(prid,password)
+        encryptPass=encrypt_data(password)
+        user=UserModel.search_Users(prid,encryptPass)
         if user != None:
             return jsonify(user)
         else:
@@ -28,15 +30,16 @@ def get_user(prid,password):
         return jsonify({'Message':str(ex)}),500
         
 #Ruta para añadir un usuario
-@main.route('/add',methods=['POST'])
+@main.route('/',methods=['POST'])
 def add_user():
     try:
         id=request.json['id']
         display_name=request.json['display_name']
         prid=request.json['prid']
         password=request.json['password']
+        passwordEncrypt=encrypt_data(password)
         reset_password=request.json['reset_password']
-        user=User(id,display_name,prid,password,reset_password)
+        user=User(id,display_name,prid,passwordEncrypt,reset_password)
         affected_rows=UserModel.add_Users(user)
 
         if affected_rows == 1:
@@ -47,7 +50,7 @@ def add_user():
         return jsonify({'Message':str(ex)}),500
     
 #Ruta para borrar usuarios
-@main.route('/delete/<id>',methods=['DELETE'])
+@main.route('/<id>',methods=['DELETE'])
 def delete_user(id):
     try:
         user=User(id)

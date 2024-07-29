@@ -1,10 +1,11 @@
 from flask import Flask 
 from config import config
+from flask_cors import CORS
 
 #Importar Rutas 
 from routes import User
-
 app=Flask(__name__)
+CORS(app) 
 
 def Page_not_Found(error):
     return"<h1> Pagina No disponible </h1>",404
