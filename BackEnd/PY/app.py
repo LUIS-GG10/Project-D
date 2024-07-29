@@ -2,7 +2,9 @@ from flask import Flask, logging, request, jsonify
 import json
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
+
 
 # Configure the database connection
 __tablename__ = 'users'

@@ -8,6 +8,7 @@ import { MatLabel } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { merge } from 'rxjs';
+import { HttpClient} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 
 @Component({
@@ -21,6 +22,9 @@ export class FormularioComponent {
 onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
+if (this.PRID.valid && this.Password.valid) {
+  this.sendData();
+}
 }
 
   entrar = false;
@@ -28,7 +32,7 @@ this.updateErrorMessage();
   readonly Password = new FormControl('', [Validators.required,Validators.minLength(7), Validators.pattern(/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]);
   errorMessagePRID = signal('');
   errorMessage = signal('');
-  constructor() {
+  constructor(private http: HttpClient) { // Inject HttpClient
     merge(this.PRID.statusChanges, this.PRID.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -65,7 +69,22 @@ this.updateErrorMessage();
     
   }
   hide = signal(true);
+
+  sendData() {
+    // Encode the credentials (if necessary)
+    const PRID = this.PRID.value;
+    const Password = this.Password.value;
   
+    // Construct the request URL with the parameters
+    const url = `http://127.0.0.1:5000/api/Users/${PRID},${Password}`;
+  
+    // Make the GET request
+    this.http.get(url).subscribe(response => {
+      console.log('Success:', response);
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
  
 }
 
