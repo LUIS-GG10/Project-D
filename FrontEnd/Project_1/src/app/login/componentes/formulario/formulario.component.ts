@@ -10,6 +10,7 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import { merge } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -19,9 +20,11 @@ import {MatIconModule} from '@angular/material/icon';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
+ 
 onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
+this.router.navigate(['Principal']);
 if (this.PRID.valid && this.Password.valid) {
   this.sendData();
 }
@@ -32,7 +35,9 @@ if (this.PRID.valid && this.Password.valid) {
   readonly Password = new FormControl('', [Validators.required,Validators.minLength(7), Validators.pattern(/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]);
   errorMessagePRID = signal('');
   errorMessage = signal('');
-  constructor(private http: HttpClient) { // Inject HttpClient
+  constructor(private router: Router, private http: HttpClient) {
+    // Aquí puedes agregar cualquier lógica adicional necesaria
+  }
     merge(this.PRID.statusChanges, this.PRID.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
