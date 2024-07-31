@@ -48,3 +48,10 @@
     text-decoration: none;
   }
   
+   button[mat-icon-button] {
+    width: 80%;
+    background-color:transparent;
+    color: #D90479;
+    border-color: transparent;
+  }
+ 
