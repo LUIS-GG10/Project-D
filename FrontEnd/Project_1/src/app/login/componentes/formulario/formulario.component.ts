@@ -11,7 +11,7 @@ import { merge } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
-
+ 
 @Component({
   selector: 'app-formulario',
   standalone: true,
@@ -21,17 +21,17 @@ import { Router } from '@angular/router';
 })
 
 export class FormularioComponent {
- 
 onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
-
 if (this.PRID.valid && this.Password.valid) {
   this.sendData();
-  this.router.navigate(['Principal']);
+    if(this.isSuccess=true){
+      this.router.navigate(['Principal']);
+    }
 }
 }
-
+  isSuccess=false; 
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required]);
   readonly Password = new FormControl('', [Validators.required]);
@@ -46,9 +46,6 @@ if (this.PRID.valid && this.Password.valid) {
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
-    
-  
-
 
   updateErrorMessage() {
     if(this.entrar==true){
@@ -60,34 +57,46 @@ if (this.PRID.valid && this.Password.valid) {
     }
     }
   }
-  
+ 
   clearErrors() {
     this.entrar = false;
     this.updateErrorMessage();
     this.errorMessage.set('');
-  
   }
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-
   sendData() {
     // Encode the credentials (if necessary)
     const PRID = this.PRID.value;
     const Password = this.Password.value;
+    const data={
+      prid:PRID,
+      password:Password
+    }
+
   
     // Construct the request URL with the parameters
-    const url = `http://127.0.0.1:5000/api/Users/${PRID},${Password}`;
+    const url = `http://127.0.0.1:5000/api/Users/Validate`;
   
     // Make the GET request
-    this.http.get(url).subscribe(response => {
+    this.http.post(url,data).subscribe(response => {
       console.log('Success:', response);
+      this.responseValidate(response);
     }, error => {
       console.error('Error:', error);
     });
   }
+  responseValidate(responsedata: any){
+    if(responsedata.Message){
+      this.isSuccess = responsedata.Message;
+      console.log(this.isSuccess);
+    }
+    else{
+      console.log("NO funciona");
+    }
+
+  }
 }
-
-
