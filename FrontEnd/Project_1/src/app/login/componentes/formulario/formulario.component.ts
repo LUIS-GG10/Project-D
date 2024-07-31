@@ -11,7 +11,7 @@ import { merge } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
-
+ 
 @Component({
   selector: 'app-formulario',
   standalone: true,
@@ -20,24 +20,23 @@ import { Router } from '@angular/router';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
- 
 onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
-this.router.navigate(['Principal']);
 if (this.PRID.valid && this.Password.valid) {
   this.sendData();
+    if(this.isSuccess=true){
+      this.router.navigate(['Principal']);
+    }
 }
 }
-
+  isSuccess=false; 
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required, Validators.pattern('^[a-zA-Z]{4}[0-9]{3}$')]);
   readonly Password = new FormControl('', [Validators.required,Validators.minLength(7), Validators.pattern(/^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)]);
   errorMessagePRID = signal('');
   errorMessage = signal('');
-  constructor(private router: Router, private http: HttpClient) {
-    // Aquí puedes agregar cualquier lógica adicional necesaria
-  }
+  constructor(private http: HttpClient,private router: Router) { // Inject HttpClient
     merge(this.PRID.statusChanges, this.PRID.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
@@ -45,8 +44,8 @@ if (this.PRID.valid && this.Password.valid) {
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
   }
-
-
+ 
+ 
   updateErrorMessage() {
     if(this.entrar==true){
     if (this.PRID.hasError('required')) {
@@ -65,33 +64,45 @@ if (this.PRID.valid && this.Password.valid) {
     }
     }
   }
-  
+ 
   clearErrors() {
     this.entrar = false;
     this.updateErrorMessage();
     this.errorMessage.set('');
     this.errorMessagePRID.set('');
-    
+   
   }
   hide = signal(true);
-
+ 
   sendData() {
     // Encode the credentials (if necessary)
     const PRID = this.PRID.value;
     const Password = this.Password.value;
+    const data={
+      prid:PRID,
+      password:Password
+    }
+
   
     // Construct the request URL with the parameters
-    const url = `http://127.0.0.1:5000/api/Users/${PRID},${Password}`;
+    const url = `http://127.0.0.1:5000/api/Users/Validate`;
   
     // Make the GET request
-    this.http.get(url).subscribe(response => {
+    this.http.post(url,data).subscribe(response => {
       console.log('Success:', response);
+      this.responseValidate(response);
     }, error => {
       console.error('Error:', error);
     });
   }
- 
+  responseValidate(responsedata: any){
+    if(responsedata.Message){
+      this.isSuccess = responsedata.Message;
+      console.log(this.isSuccess);
+    }
+    else{
+      console.log("NO funciona");
+    }
+
+  }
 }
-
-
-

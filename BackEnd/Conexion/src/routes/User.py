@@ -16,18 +16,27 @@ def get_users():
     except Exception as ex:
         return jsonify({'Message':str(ex)}),500
     
-#Ruta para traer un usuario 
-@main.route('/<prid>,<password>')
-def get_user(prid,password):
+# Minimal route for user authentication
+@main.route('/Validate', methods=['POST'])
+def get_user():
     try:
-        encryptPass=encrypt_data(password)
-        user=UserModel.search_Users(prid,encryptPass)
-        if user != None:
-            return jsonify(user)
+        # Extract data from the request body
+        data = request.get_json()
+        prid = data.get('prid')
+        password = data.get('password')
+
+        if not prid or not password:
+            return jsonify({'Message': 'Missing required parameters'}), 400
+
+        encryptPass = encrypt_data(password)
+        user = UserModel.search_Users(prid, encryptPass)
+        
+        if user:
+            return  jsonify({'Message': 'True'}),200
         else:
-            return "<h1>Usuario no encontrado</h1>",404
+            return jsonify({'Message': 'Usuario no encontrado'}), 404
     except Exception as ex:
-        return jsonify({'Message':str(ex)}),500
+        return jsonify({'Message': str(ex)}), 500
         
 #Ruta para añadir un usuario
 @main.route('/',methods=['POST'])
