@@ -1,14 +1,14 @@
 .Img_L{
-    height: 5%;
-    width: 15%;
-    padding-left: 1%;
-    padding-bottom: 1%;
-    padding-top: .5%;
+    height: 10%;
+    width: 20%;
+    padding-left: 3%;
+    
 }
 .esquinada {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0.7%;
+    left: 0%;
+    padding-bottom: 1%;
 }
 mat-toolbar{
     background-color: white;

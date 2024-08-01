@@ -1,5 +1,6 @@
 from flask import Blueprint , jsonify, request
 import uuid
+from Encrypt.Encrypt import encrypt_data,decrypt_data
 
 #Models
 from models.UserModels import UserModel
@@ -15,28 +16,39 @@ def get_users():
     except Exception as ex:
         return jsonify({'Message':str(ex)}),500
     
-#Ruta para traer un usuario 
-@main.route('/<prid>,<password>')
-def get_user(prid,password):
+# Minimal route for user authentication
+@main.route('/Validate', methods=['POST'])
+def get_user():
     try:
-        user=UserModel.search_Users(prid,password)
-        if user != None:
-            return jsonify(user)
+        # Extract data from the request body
+        data = request.get_json()
+        prid = data.get('prid')
+        password = data.get('password')
+
+        if not prid or not password:
+            return jsonify({'Message': 'Missing required parameters'}), 400
+
+        encryptPass = encrypt_data(password)
+        user = UserModel.search_Users(prid, encryptPass)
+        
+        if user:
+            return  jsonify({'Message': 'true'}),200
         else:
-            return "<h1>Usuario no encontrado</h1>",404
+            return jsonify({'Message': 'Usuario no encontrado'}), 404
     except Exception as ex:
-        return jsonify({'Message':str(ex)}),500
+        return jsonify({'Message': str(ex)}), 500
         
 #Ruta para añadir un usuario
-@main.route('/add',methods=['POST'])
+@main.route('/',methods=['POST'])
 def add_user():
     try:
         id=request.json['id']
         display_name=request.json['display_name']
         prid=request.json['prid']
         password=request.json['password']
+        passwordEncrypt=encrypt_data(password)
         reset_password=request.json['reset_password']
-        user=User(id,display_name,prid,password,reset_password)
+        user=User(id,display_name,prid,passwordEncrypt,reset_password)
         affected_rows=UserModel.add_Users(user)
 
         if affected_rows == 1:
@@ -47,7 +59,7 @@ def add_user():
         return jsonify({'Message':str(ex)}),500
     
 #Ruta para borrar usuarios
-@main.route('/delete/<id>',methods=['DELETE'])
+@main.route('/<id>',methods=['DELETE'])
 def delete_user(id):
     try:
         user=User(id)

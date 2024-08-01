@@ -1,0 +1,29 @@
+.pagina2{
+    background-image: url('bacterias.jpg');
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    width: vw;
+    height: 90vh;
+    display: flex;
+    justify-content:center;
+    align-items:center;
+  } 
+input {
+    padding:2%;
+    margin-right:4%;
+    border: transparent;
+
+   
+  }
+  .example-flex-container {
+    display: flex;
+    justify-content: flex-end; /* Alinea a la derecha */
+    flex-wrap: wrap;
+    background-color: #F29F05;
+    
+
+  }
+  
+  
