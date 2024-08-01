@@ -32,7 +32,7 @@ def get_user():
         user = UserModel.search_Users(prid, encryptPass)
         
         if user:
-            return  jsonify({'Message': 'True'}),200
+            return  jsonify({'Message': 'true'}),200
         else:
             return jsonify({'Message': 'Usuario no encontrado'}), 404
     except Exception as ex:

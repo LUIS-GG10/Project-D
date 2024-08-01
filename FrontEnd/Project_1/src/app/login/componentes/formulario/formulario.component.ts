@@ -26,9 +26,6 @@ this.entrar = true;
 this.updateErrorMessage();
 if (this.PRID.valid && this.Password.valid) {
   this.sendData();
-    if(this.isSuccess=true){
-      this.router.navigate(['Principal']);
-    }
 }
 }
   isSuccess=false; 
@@ -37,19 +34,13 @@ if (this.PRID.valid && this.Password.valid) {
   readonly Password = new FormControl('', [Validators.required]);
 
   errorMessage = signal('');
+  
   constructor(private router: Router, private http: HttpClient) {
-    // Aquí puedes agregar cualquier lógica adicional necesaria
-    merge(this.PRID.statusChanges, this.PRID.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
-    merge(this.Password.statusChanges, this.Password.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
+  
   }
 
   updateErrorMessage() {
     if(this.entrar==true){
-   
     if (this.Password.hasError('required') || this.PRID.hasError('required')) {
       this.errorMessage.set('Password y PRID is a required field');
     }  else {
@@ -93,9 +84,11 @@ if (this.PRID.valid && this.Password.valid) {
     if(responsedata.Message){
       this.isSuccess = responsedata.Message;
       console.log(this.isSuccess);
+      this.router.navigate(['Principal']);
     }
     else{
-      console.log("NO funciona");
+    
+
     }
 
   }
