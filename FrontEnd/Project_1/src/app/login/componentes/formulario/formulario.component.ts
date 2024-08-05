@@ -11,6 +11,7 @@ import { merge } from 'rxjs';
 import { HttpClient} from '@angular/common/http';
 import {MatIconModule} from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../auth.service';
  
 @Component({
   selector: 'app-formulario',
@@ -28,6 +29,15 @@ if (this.PRID.valid && this.Password.valid) {
   this.sendData();
 }
 }
+get_isSuccess(){
+  const fakeToken = '12345';  // Esto es solo un ejemplo
+    if (this.authService.login(this.isSuccess)) {
+      this.authService.setToken(fakeToken);  // Guarda el token (esto es solo un ejemplo)
+      this.router.navigate(['/Principal']);  // Redirige a la página protegida
+    } else {
+      alert('Invalid credentials');
+    }
+}
   isSuccess=false; 
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required]);
@@ -35,8 +45,8 @@ if (this.PRID.valid && this.Password.valid) {
 
   errorMessage = signal('');
   
-  constructor(private router: Router, private http: HttpClient) {
-  
+  constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
+    this.isSuccess = false;
   }
 
   updateErrorMessage() {
@@ -82,9 +92,9 @@ if (this.PRID.valid && this.Password.valid) {
   }
   responseValidate(responsedata: any){
     if(responsedata.Message){
-      this.isSuccess = responsedata.Message;
+      this.isSuccess = true;
       console.log(this.isSuccess);
-      this.router.navigate(['Principal']);
+      this.get_isSuccess();
     }
     else{
     

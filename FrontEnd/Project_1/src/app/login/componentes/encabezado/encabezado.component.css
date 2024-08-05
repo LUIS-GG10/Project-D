@@ -2,13 +2,13 @@
     height: 10%;
     width: 20%;
     padding-left: 3%;
-    padding-bottom: 3%;
-    padding-top: 2.5%;
+    
 }
 .esquinada {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0.7%;
+    left: 0%;
+    padding-bottom: 1%;
 }
 mat-toolbar{
     background-color: white;
