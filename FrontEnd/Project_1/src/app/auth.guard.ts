@@ -10,7 +10,6 @@ export class AuthGuard  {
 
   canActivate: CanActivateFn = (route, state) => {
     const isAuthenticated = this.authService.isAuthenticated();
-    console.log(isAuthenticated);
     if (!isAuthenticated) {
       this.router.navigate(['']);
     }
