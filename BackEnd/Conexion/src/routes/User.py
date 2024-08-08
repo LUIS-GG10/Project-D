@@ -32,12 +32,26 @@ def get_user():
         user = UserModel.search_Users(prid, encryptPass)
         
         if user:
-            return  jsonify(user),200
+            # Ensure the 'type' is included in the user object
+            user_type = user.get('type')
+            if not user_type:
+                return jsonify({'Message': 'User type not found'}), 500
+
+            if user_type == 'A':
+                # Provide admin access
+                return jsonify(user), 200
+            elif user_type == 'S':
+                # Provide superuser access
+                return jsonify(user), 200
+            elif user_type == 'U':
+                # Provide standard user access
+                return (user), 200
+            else:
+                return jsonify({'Message': 'Unknown role'}), 403
         else:
             return jsonify({'Message': 'Usuario no encontrado'}), 404
     except Exception as ex:
         return jsonify({'Message': str(ex)}), 500
-        
 #Ruta para añadir un usuario
 @main.route('/',methods=['POST'])
 def add_user():
@@ -48,7 +62,8 @@ def add_user():
         password=request.json['password']
         passwordEncrypt=encrypt_data(password)
         reset_password=request.json['reset_password']
-        user=User(id,display_name,prid,passwordEncrypt,reset_password)
+        type=request.json['type']
+        user=User(id,display_name,prid,passwordEncrypt,reset_password,type)
         affected_rows=UserModel.add_Users(user)
 
         if affected_rows == 1:
@@ -63,7 +78,7 @@ def add_user():
 def delete_user(id):
     try:
         user=User(id)
-        affected_rows=UserModel.dekete_Users(user)
+        affected_rows=UserModel.delete_Users(user)
 
         if affected_rows == 1:
             return jsonify(user.id)
