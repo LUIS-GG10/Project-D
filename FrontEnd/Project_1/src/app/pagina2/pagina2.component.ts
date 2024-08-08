@@ -16,4 +16,5 @@ import {MatButtonModule} from '@angular/material/button';
 })
 export class Pagina2Component {
 
+
 }

@@ -26,6 +26,8 @@ onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
 if (this.PRID.valid && this.Password.valid) {
+  this.isSuccess = false;
+  this.get_isSuccess();
   this.sendData();
 }
 }
@@ -33,7 +35,6 @@ get_isSuccess(){
   const fakeToken = '12345';  // Esto es solo un ejemplo
     if (this.authService.login(this.isSuccess)) {
       this.authService.setToken(fakeToken);  // Guarda el token (esto es solo un ejemplo)
-      this.router.navigate(['/Principal']);  // Redirige a la página protegida
     } else {
       alert('Invalid credentials');
     }
@@ -42,7 +43,7 @@ get_isSuccess(){
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required]);
   readonly Password = new FormControl('', [Validators.required]);
-
+  display_name = "";
   errorMessage = signal('');
   
   constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
@@ -94,12 +95,9 @@ get_isSuccess(){
     if(responsedata.Message){
       this.isSuccess = true;
       console.log(this.isSuccess);
-      this.router.navigate(['Principal']);
+      this.get_isSuccess();
     }
     else{
-    
-
     }
-
   }
 }
