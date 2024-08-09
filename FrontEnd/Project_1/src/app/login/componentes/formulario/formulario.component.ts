@@ -22,17 +22,23 @@ import { AuthService } from '../../../auth.service';
 })
 
 export class FormularioComponent {
+
 onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
 if (this.PRID.valid && this.Password.valid) {
   this.sendData();
+  if(!this.isSuccess){
+    this.errorMessageV.set('PRID or Password no validate');
+  }
 }
+
 }
 get_isSuccess(response: any){
   const fakeToken = '12345';  // Esto es solo un ejemplo
     if (this.authService.login(this.isSuccess)) {
       this.authService.setToken(fakeToken);  // Guarda el token (esto es solo un ejemplo)
+      this.authService.setRole(response.type)
       this.router.navigate(['/Principal'],{ state: { user: response }});  // Redirige a la página protegida
     } else {
       alert('Invalid credentials');
@@ -44,13 +50,13 @@ get_isSuccess(response: any){
   readonly Password = new FormControl('', [Validators.required]);
 
   errorMessage = signal('');
-  
+  errorMessageV = signal('');
   constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
     
   }
 
   updateErrorMessage() {
-    if(this.entrar==true){
+    if(this.entrar){
     if (this.Password.hasError('required') || this.PRID.hasError('required')) {
       this.errorMessage.set('Password y PRID is a required field');
     }  else {
@@ -98,8 +104,6 @@ get_isSuccess(response: any){
       this.get_isSuccess(responsedata);
     }
     else{
-    
-
     }
 
   }

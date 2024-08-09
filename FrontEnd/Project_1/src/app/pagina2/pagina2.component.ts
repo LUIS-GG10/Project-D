@@ -22,6 +22,8 @@ LogOut() {
 
 }
   user: any;
+  userType:string|null=''
+
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
@@ -30,6 +32,8 @@ LogOut() {
       this.user = history.state.user;
       console.log('User data:', this.user);
     });
+    console.log(localStorage)
+    this.userType=localStorage.getItem('type')
   }
 
 }
