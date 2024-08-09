@@ -28,14 +28,14 @@ class UserModel:
             connection = get_connection()
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "SELECT  display_name, prid  FROM users WHERE prid = %s AND password = %s",
+                    "SELECT display_name, prid FROM users WHERE prid = %s AND password = %s",
                     (prid, password)
                 )
                 row = cursor.fetchone()
                 user = None
                 if row:
-                    user = User(None, row[0], row[1])
-                    user = user.to_JSONS()
+                    user = User(row[0], row[1])
+                    user = user.to_JSON()
             connection.close()
             return user
         except Exception as ex:
