@@ -26,8 +26,6 @@ onAccion() {
 this.entrar = true;
 this.updateErrorMessage();
 if (this.PRID.valid && this.Password.valid) {
-  this.isSuccess = false;
-  this.get_isSuccess();
   this.sendData();
 }
 }
@@ -44,7 +42,7 @@ get_isSuccess(response: any){
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required]);
   readonly Password = new FormControl('', [Validators.required]);
-  display_name = "";
+
   errorMessage = signal('');
   
   constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
@@ -97,9 +95,12 @@ get_isSuccess(response: any){
     if(responsedata){
       this.isSuccess = true;
       console.log(this.isSuccess);
-      this.get_isSuccess();
+      this.get_isSuccess(responsedata);
     }
     else{
+    
+
     }
+
   }
 }
