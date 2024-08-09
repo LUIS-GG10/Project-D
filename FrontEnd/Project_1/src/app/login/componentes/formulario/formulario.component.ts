@@ -31,10 +31,11 @@ if (this.PRID.valid && this.Password.valid) {
   this.sendData();
 }
 }
-get_isSuccess(){
+get_isSuccess(response: any){
   const fakeToken = '12345';  // Esto es solo un ejemplo
     if (this.authService.login(this.isSuccess)) {
       this.authService.setToken(fakeToken);  // Guarda el token (esto es solo un ejemplo)
+      this.router.navigate(['/Principal'],{ state: { user: response }});  // Redirige a la página protegida
     } else {
       alert('Invalid credentials');
     }
@@ -47,7 +48,7 @@ get_isSuccess(){
   errorMessage = signal('');
   
   constructor(private router: Router, private http: HttpClient, private authService: AuthService) {
-  
+    
   }
 
   updateErrorMessage() {
@@ -86,13 +87,14 @@ get_isSuccess(){
     // Make the GET request
     this.http.post(url,data).subscribe(response => {
       console.log('Success:', response);
+      
       this.responseValidate(response);
     }, error => {
       console.error('Error:', error);
     });
   }
   responseValidate(responsedata: any){
-    if(responsedata.Message){
+    if(responsedata){
       this.isSuccess = true;
       console.log(this.isSuccess);
       this.get_isSuccess();

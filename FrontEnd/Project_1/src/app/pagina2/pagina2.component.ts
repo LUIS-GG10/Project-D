@@ -1,20 +1,36 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import { EncabezadoComponent } from '../login/componentes/encabezado/encabezado.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../app/auth.service';
 @Component({
   selector: 'app-pagina2',
   standalone: true,
-  imports: [EncabezadoComponent, MatCardModule, MatToolbar,MatButtonModule,MatIconModule,MatDividerModule],
+  imports: [EncabezadoComponent, MatCardModule, MatToolbar,MatButtonModule,MatIconModule,MatDividerModule,CommonModule],
   templateUrl: './pagina2.component.html',
   styleUrl: './pagina2.component.css'
 })
-export class Pagina2Component {
+export class Pagina2Component implements OnInit{
+LogOut() {
+  this.router.navigate(['']);
+  this.authService.logout();
+
+}
+  user: any;
+  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {}
+
+  ngOnInit(): void {
+    // Retrieve the navigation state
+    this.route.paramMap.subscribe(() => {
+      this.user = history.state.user;
+      console.log('User data:', this.user);
+    });
+  }
 
 
 }

@@ -15,3 +15,10 @@ class User():
             'password':self.password,
             'reset_password':self.reset_password        
         }
+    def to_JSONS(self):
+        return {
+            'display_name':self.display_name,
+            'prid':self.prid     
+        }
+   
+   

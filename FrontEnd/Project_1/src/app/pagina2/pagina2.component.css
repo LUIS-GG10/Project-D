@@ -15,7 +15,6 @@ input {
     margin-right:4%;
     border: transparent;
 
-   
   }
   .example-flex-container {
     display: flex;
@@ -24,6 +23,12 @@ input {
     background-color: #F29F05;
     
 
+  }
+  .bienvenida{
+    color: white;
+    margin-right: 85%;
+    margin-bottom: -10%;
+    margin-top: 1%;
   }
   
   
