@@ -36,7 +36,7 @@ if (this.PRID.valid && this.Password.valid) {
 }
 get_isSuccess(response: any){
   const fakeToken = '12345';  // Esto es solo un ejemplo
-    if (this.authService.login(this.isSuccess)) {
+    if (this.authService.login(true)) {
       this.authService.setToken(fakeToken);  // Guarda el token (esto es solo un ejemplo)
       this.authService.setRole(response.type)
       this.router.navigate(['/Principal'],{ state: { user: response }});  // Redirige a la página protegida
@@ -44,7 +44,7 @@ get_isSuccess(response: any){
       alert('Invalid credentials');
     }
 }
-  isSuccess=false; 
+  isSuccess=true; 
   entrar = false;
   readonly PRID = new FormControl('', [Validators.required]);
   readonly Password = new FormControl('', [Validators.required]);
