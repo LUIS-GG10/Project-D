@@ -17,6 +17,9 @@ export class AuthService {
   setToken(token: string) {
     localStorage.setItem('authToken', token);
   }
+  setRole(type:string){
+    localStorage.setItem('type',type)
+  }
 
   isAuthenticated(): boolean {
     return this.authenticated || !!localStorage.getItem('authToken');

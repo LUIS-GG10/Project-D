@@ -9,11 +9,11 @@ class UserModel:
             connection = get_connection()
             users = []
             with connection.cursor() as cursor:
-                cursor.execute("SELECT id, display_name, prid, password, reset_password FROM users")
+                cursor.execute("SELECT id, display_name, prid, password, reset_password,type FROM users")
                 resultset = cursor.fetchall()
 
                 for row in resultset:
-                    user = User(row[0], row[1], row[2], row[3], row[4])
+                    user = User(row[0], row[1], row[2], row[3], row[4],row[5])
                     users.append(user.to_JSON())
             
             connection.close()
@@ -28,14 +28,14 @@ class UserModel:
             connection = get_connection()
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "SELECT  display_name, prid  FROM users WHERE prid = %s AND password = %s",
+                    "SELECT id, display_name, prid, password, reset_password,type FROM users WHERE prid = %s AND password = %s",
                     (prid, password)
                 )
                 row = cursor.fetchone()
                 user = None
                 if row:
-                    user = User(None, row[0], row[1])
-                    user = user.to_JSONS()
+                    user = User(row[0], row[1], row[2], row[3], row[4],row[5])
+                    user = user.to_JSON()
             connection.close()
             return user
         except Exception as ex:
@@ -48,8 +48,8 @@ class UserModel:
             connection = get_connection()
             with connection.cursor() as cursor:
                 cursor.execute(
-                    "INSERT INTO users (id, display_name, prid, password, reset_password) VALUES (%s, %s, %s, %s, %s)",
-                    (user.id, user.display_name, user.prid, user.password, user.reset_password)
+                    "INSERT INTO users (id, display_name, prid, password, reset_password,type) VALUES (%s, %s, %s, %s, %s,%s)",
+                    (user.id, user.display_name, user.prid, user.password, user.reset_password,user.type),
                 )
                 affected_rows = cursor.rowcount
                 connection.commit()

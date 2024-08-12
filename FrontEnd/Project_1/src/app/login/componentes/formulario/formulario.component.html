@@ -34,8 +34,8 @@
      @if (Password.invalid || PRID.invalid) {
           <mat-error>{{errorMessage()}}</mat-error>
         }
-      @if (Password.valid && PRID.valid) {
-        <mat-error>{{errorMessage()}}</mat-error>
+      @if (!isSuccess){
+        <mat-error>{{errorMessageV()}}</mat-error>
       }
      
   </mat-card-content>
