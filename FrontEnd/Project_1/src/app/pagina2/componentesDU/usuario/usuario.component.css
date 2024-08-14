@@ -1,0 +1,14 @@
+
+mat-card{
+    background-color: beige;
+}
+mat-card-content{
+    width:70vw;
+}
+button[mat-icon-button] {
+    
+    background-color:transparent;
+    color: #f7f5f6;
+    border-color: transparent;
+  }
+
