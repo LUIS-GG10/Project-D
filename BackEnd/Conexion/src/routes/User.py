@@ -6,7 +6,7 @@ from Encrypt.Encrypt import encrypt_data,decrypt_data
 from models.UserModels import UserModel
 from models.entitites.User import User
 
-main=Blueprint('movie_blueprint',__name__)
+main=Blueprint('user_main',__name__)
 #Ruta para traer todos los usarios
 @main.route('/')
 def get_users():
