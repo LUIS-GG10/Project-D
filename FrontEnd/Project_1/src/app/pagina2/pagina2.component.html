@@ -34,9 +34,11 @@
     </div>
 
 <div class="pagina2">
-
-<div class="text-light" *ngIf="userType=='A'">hello world {{userType}} </div>
-
+  <div class="text-light" *ngIf="userType=='A'"><app-administrador></app-administrador> </div>
+<div class="text-light" *ngIf="userType=='S'"><app-super-usuario></app-super-usuario> </div>
+<div  *ngIf="userType=='U'"><app-usuario></app-usuario> </div>
 
 </div>
+
+
 
