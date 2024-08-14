@@ -1,0 +1,31 @@
+mat-card{
+    background-color: white;
+   
+}
+mat-label{
+    color: black;
+}
+button[mat-flat-button] {
+    width: 60%;
+    padding: .3vw;
+    background-color: #D90479;
+    color: white;
+    border-color: transparent;
+
+  }
+  .custom-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+   
+  }
+  mat-form-field input{
+    color: #000 !important; 
+  }
+  mat-card-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }

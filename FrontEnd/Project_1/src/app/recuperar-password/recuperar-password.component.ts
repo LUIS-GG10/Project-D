@@ -6,6 +6,7 @@ import { MatLabel } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recuperar-password',
@@ -14,6 +15,10 @@ import {FormsModule} from '@angular/forms';
   templateUrl: './recuperar-password.component.html',
   styleUrl: './recuperar-password.component.css'
 })
-export class RecuperarPasswordComponent {
-
+export class RecuperarPasswordComponent{
+constructor(private router:Router) {}
+onclick(){
+  console.log('clicked')
+  this.router.navigate(['/'])
+}
 }
