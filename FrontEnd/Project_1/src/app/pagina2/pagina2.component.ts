@@ -37,7 +37,7 @@ LogOut() {
       console.log('User data:', this.user);
     });
     console.log(localStorage)
-    this.userType=localStorage.getItem('type')*/
+    this.userType=localStorage.getItem('type')
   }
 
 }

@@ -17,7 +17,7 @@ if __name__== '__main__':
 
     Server
     app.register_blueprint(User.main,url_prefix='/api/Users', name='user_main')
-    app.register_blueprint(Server.main, url_prefix='/Principal')
+    app.register_blueprint(Server.main, url_prefix='/api/Principal')
 
     #Si no existe la pagina
     app.register_error_handler(404,Page_not_Found)
