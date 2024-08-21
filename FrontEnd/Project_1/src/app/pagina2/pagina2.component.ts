@@ -30,7 +30,7 @@ LogOut() {
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userType = 'S';
+    this.userType = 'A';
    /* // Retrieve the navigation state
     this.route.paramMap.subscribe(() => {
       this.user = history.state.user;
