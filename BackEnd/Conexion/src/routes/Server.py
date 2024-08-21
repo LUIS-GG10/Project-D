@@ -11,47 +11,32 @@ main=Blueprint('server_main',__name__)
 @main.route('/')
 def get_servers():
     try:
-        servers=ServerModel.get_Servers
+        servers=ServerModel.get_Servers()
         return jsonify(servers)
     except Exception as ex:
         return jsonify({'Message':str(ex)}),500
     
-# # Minimal route for user authentication
-# @main.route('/search', methods=['POST'])
-# def get_servers():
-#     try:
-#         # Extract data from the request body
-#         data = request.get_json()
-#         prid = data.get('prid')
-#         password = data.get('password')
-
-#         if not prid or not password:
-#             return jsonify({'Message': 'Missing required parameters'}), 400
-
-#         encryptPass = encrypt_data(password)
-#         user = UserModel.search_Users(prid, encryptPass)
-        
-#         if user:
-#             # Ensure the 'type' is included in the user object
-#             user_type = user.get('type')
-#             if not user_type:
-#                 return jsonify({'Message': 'User type not found'}), 500
-
-#             if user_type == 'A':
-#                 # Provide admin access
-#                 return jsonify(user), 200
-#             elif user_type == 'S':
-#                 # Provide superuser access
-#                 return jsonify(user), 200
-#             elif user_type == 'U':
-#                 # Provide standard user access
-#                 return (user), 200
-#             else:
-#                 return jsonify({'Message': 'Unknown role'}), 403
-#         else:
-#             return jsonify({'Message': 'Usuario no encontrado'}), 404
-#     except Exception as ex:
-#         return jsonify({'Message': str(ex)}), 500
+@main.route('/search', methods=['POST'])
+def get_server():
+    try:
+        # Extract data from the request body
+        data = request.get_json()
+        name = data.get('name')
+ 
+        if not name :
+            return jsonify({'Message': 'Missing required parameters'}), 400
+        # Search for the server
+        server = ServerModel.search_Server(name)
+ 
+        if server:
+            return jsonify(server), 200
+        else:
+            return jsonify({'Message': 'Server not found'}), 404
+    except Exception as ex:
+        return jsonify({'Message': str(ex)}), 500
+    
+    
+    
 #Ruta para añadir un usuario
 @main.route('/',methods=['POST'])
 def add_server():
@@ -59,16 +44,41 @@ def add_server():
         id=request.json['id']
         name=request.json['name']
         password=request.json['password']
-        server=Server(id,name,password)
+        hashPassword=encrypt_data(password)
+        IP=request.json['IP']
+        HostName=request.json['HostName']
+        LogLocation=request.json['LogLocation']
+        OS=request.json['OS']
+        PhysicalServer=request.json['PhysicalServer']
+        type=request.json['type']
+        
+        
+        server=Server(id,name,password,hashPassword,IP,HostName,LogLocation,OS,PhysicalServer,type)
         affected_rows=ServerModel.add_Servers(server)
 
         if affected_rows == 1:
             return jsonify(server.id)
         else:
-            return "<h1>Usuario no creado</h1>",500
+            return "<h1>Server no creado</h1>",500
     except Exception as ex:
         return jsonify({'Message':str(ex)}),500
     
+
+@main.route('/<id>', methods=['PUT'])
+def update_server(id):
+    try:
+        password=request.json['password']
+        hashPassword=encrypt_data(password)
+        server=Server(id,None,password,hashPassword)
+        affected_rows=ServerModel.update_Servers(server)
+
+        if affected_rows == 1:
+            return jsonify(server.id)
+        else:
+            return jsonify({'message':"Error on insert "}),500
+    except Exception as ex:
+        return jsonify({'Message': str(ex)}), 500
+
 #Ruta para borrar usuarios
 @main.route('/<id>',methods=['DELETE'])
 def delete_user(id):
