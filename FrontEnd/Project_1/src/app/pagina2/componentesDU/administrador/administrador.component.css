@@ -1,0 +1,18 @@
+mat-card{
+  background-color: beige;
+  display: flex;
+}
+mat-card-content{
+  width:100%;
+}
+button[mat-icon-button] {
+  
+  background-color:transparent;
+  color: #f7f5f6;
+  border-color: transparent;
+}
+button[mat-menu-item]{
+  background-color: transparent;
+  border-color: transparent;
+  color: #f7f5f6;
+}

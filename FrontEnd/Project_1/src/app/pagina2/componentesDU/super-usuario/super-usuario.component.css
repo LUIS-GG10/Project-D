@@ -2,7 +2,7 @@ mat-card{
     background-color: beige;
 }
 mat-card-content{
-    width:70vw;
+    width: 100%;
 }
 button[mat-icon-button] {
     

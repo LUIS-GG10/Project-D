@@ -1,26 +1,33 @@
-
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import { Component } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  Password: string;
+import {MatDialog} from '@angular/material/dialog';
+import { ModificarComponent} from '../modificar/modificar.component';
 
+export interface PeriodicElement {
+  Type: string;
+  name: string;
+  Hostname: string;
+  OS: string;
+  IP: string;
+  Physical_Server:string;
+  Log_Location: string;
+  Password: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', Password: "guanajuato"},
-  {position: 2, name: 'Helium', Password: "Teamojoji" },
-  {position: 3, name: 'Lithium', Password: "huracan"},
-  {position: 4, name: 'Beryllium', Password: "erixmel"},
-  {position: 5, name: 'Boron', Password: "balneario"},
+  {Type:'Dev', name: 'FAS Server',Hostname:'APPSRVFSDV01', OS:'RHEL',IP: '185.162.34.102', Physical_Server: 'No', Log_Location:'/entimice/logs/fileserver.log', Password: "guanajuato"},
+  {Type:'Dev', name: 'FAS Server',Hostname:'APPSRVFSDV01', OS:'RHEL',IP: '185.162.34.102', Physical_Server: 'No', Log_Location:'/entimice/logs/fileserver.log', Password: "guanajuato"},
+  {Type:'Dev', name: 'FAS Server',Hostname:'APPSRVFSDV01', OS:'RHEL',IP: '185.162.34.102', Physical_Server: 'No', Log_Location:'/entimice/logs/fileserver.log', Password: "guanajuato"},
+  {Type:'Dev', name: 'FAS Server',Hostname:'APPSRVFSDV01', OS:'RHEL',IP: '185.162.34.102', Physical_Server: 'No', Log_Location:'/entimice/logs/fileserver.log', Password: "guanajuato"},
+
   
 ];
+
 @Component({
   selector: 'app-usuario',
   standalone: true,
@@ -29,7 +36,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './usuario.component.css'
 })
 export class UsuarioComponent {
-  displayedColumns: string[] = ['position', 'name', 'Password', 'symbol'];
+  constructor(public dialog: MatDialog){}
+  displayedColumns: string[] = ['Type', 'name', 'Hostname', 'OS', 'IP', 'Physical_Server', 'Log_Location', 'Password', 'symbol'];
   dataSource = ELEMENT_DATA;
   private _isHidden = Array(this.dataSource.length).fill(true); // Array to track password visibility
  
@@ -42,4 +50,13 @@ export class UsuarioComponent {
     this.dataSource = [...this.dataSource]; // Update dataSource to trigger re-rendering
     event.stopPropagation();
   }
+
+  Modificar(){
+    this.dialog.open(ModificarComponent,{
+      width: '20%',
+      data:{}
+    })
+
+  }
+
 }

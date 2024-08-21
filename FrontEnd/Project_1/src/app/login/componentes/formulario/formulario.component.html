@@ -6,7 +6,7 @@
     </div>
   </mat-card-header>
   <mat-card-content>
-    <h1>Login</h1>
+    <h1></h1>
     <mat-form-field appearance="outline" class="custom-input">
         <mat-label>PRID</mat-label>
         <input matInput [formControl]="PRID" (click)="clearErrors()" required/>
@@ -43,8 +43,8 @@
   <mat-card-actions>
     <button (click)="onAccion()" mat-flat-button id="Sign_button">Sign In</button>
     <mat-divider></mat-divider>
-    <section>
-    <a href="/ForgotPassword">Forgot password?</a>
+    <section class="Forgot">
+    <a  href="/ForgotPassword">Forgot password?</a>
     </section>
   </mat-card-actions>
 </mat-card>
