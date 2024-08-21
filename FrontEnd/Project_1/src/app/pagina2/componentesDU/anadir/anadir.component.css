@@ -1,0 +1,47 @@
+mat-card {
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+ 
+}
+
+mat-label {
+  color: rgb(10, 10, 10);
+}
+
+button[mat-flat-button] {
+  width: 60%;
+  padding: 10px;
+  background-color: #D90479;
+  color: rgb(0, 0, 0);
+  border: none;
+  margin-top: 20px; /* Espacio superior para separar el botón de otros elementos */
+}
+
+.custom-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Alinear los elementos al principio (izquierda) */
+  width: 100%;
+  margin-bottom: 20px; /* Espacio inferior para separar de otros elementos */
+}
+
+mat-form-field input {
+  color: #000000 !important;
+  margin-bottom: 10px; /* Espacio inferior para separar de otros inputs */
+  padding: 10px; /* Espacio interno para mayor tamaño y comodidad */
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+mat-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 15px; /* Espacio entre los botones */
+  padding: 20px; /* Espacio alrededor de los botones */
+}
+
+.espacio{
+  padding-left: 55px;
+}

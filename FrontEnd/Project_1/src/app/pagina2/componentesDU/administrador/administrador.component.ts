@@ -7,6 +7,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
 import { ModificarComponent} from '../modificar/modificar.component';
+import { AnadirComponent } from '../anadir/anadir.component';
+import { borrarComponent } from '../borrar/borrar.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule, MatIconButton } from '@angular/material/button';
 
@@ -39,7 +41,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AdministradorComponent {
   constructor(public dialog: MatDialog){}
-  displayedColumns: string[] = ['Type', 'name', 'Hostname', 'OS', 'IP', 'Physical_Server', 'Log_Location', 'Password', 'symbol'];
+  displayedColumns: string[] = ['Type', 'name', 'Hostname', 'OS', 'IP', 'Physical_Server', 'Log_Location', 'Password', 'symbol', 'A'];
   dataSource = ELEMENT_DATA;
   private _isHidden = Array(this.dataSource.length).fill(true); // Array to track password visibility
  
@@ -59,6 +61,20 @@ export class AdministradorComponent {
       data:{}
     })
 
+  }
+  anadir(){
+    this.dialog.open(AnadirComponent,{
+      width: '50%',
+      data:{}
+    })
+
+  }
+
+  delete(){
+    this.dialog.open(borrarComponent,{
+      width: '20%',
+      data:{}
+    })
   }
 
 }

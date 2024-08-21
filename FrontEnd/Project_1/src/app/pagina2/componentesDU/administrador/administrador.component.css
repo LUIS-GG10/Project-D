@@ -11,3 +11,8 @@ button[mat-icon-button] {
   color: #f7f5f6;
   border-color: transparent;
 }
+button[mat-menu-item]{
+  background-color: transparent;
+  border-color: transparent;
+  color: #f7f5f6;
+}

@@ -1,0 +1,51 @@
+
+<mat-card >
+    
+    <mat-card-content >
+        <mat-form-field class="espacio">
+            <mat-label>Type</mat-label>
+            <input matInput formControlName="Type">
+          </mat-form-field>
+        
+        <mat-form-field class="espacio" >
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="Name">
+        </mat-form-field>
+        <mat-form-field class="espacio">
+            <mat-label>Hostname</mat-label>
+            <input matInput formControlName="Hostname">
+          </mat-form-field>
+        
+          <mat-form-field class="espacio">
+            <mat-label>OS</mat-label>
+            <input matInput formControlName="OS">
+          </mat-form-field>
+        
+          <mat-form-field class="espacio">
+            <mat-label>IP</mat-label>
+            <input matInput formControlName="IP">
+          </mat-form-field>
+        
+          <mat-form-field class="espacio">
+            <mat-label>Physical_Server</mat-label>
+            <input matInput formControlName="Physical_Server">
+          </mat-form-field>
+        
+          <mat-form-field class="espacio">
+            <mat-label>Log_Location</mat-label>
+            <input matInput formControlName="Log_Location">
+          </mat-form-field>
+        
+          <mat-form-field class="espacio">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="Password">
+          </mat-form-field>
+        
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button (click)="onAccion()" mat-flat-button >Modificar</button>
+      <mat-divider></mat-divider>
+    </mat-card-actions>
+  </mat-card>
+  
