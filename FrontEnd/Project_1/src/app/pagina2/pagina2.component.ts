@@ -38,6 +38,6 @@ LogOut() {
     });
     console.log(localStorage)
     this.userType=localStorage.getItem('type')
+  }*/
   }
-
 }
