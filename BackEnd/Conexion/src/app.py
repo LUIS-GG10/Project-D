@@ -6,13 +6,14 @@ from flask_cors import CORS
 from routes import User
 from routes import Server
 app=Flask(__name__)
-CORS(app) 
+CORS(app, resources={r"/api/*": {"origins": "*"}}) 
 
 def Page_not_Found(error):
     return"<h1> Pagina No disponible </h1>",404
 
 if __name__== '__main__':
     app.config.from_object(config['development'])
+
     #BluePrint
 
     Server
