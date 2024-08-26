@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  private authenticated = true;
+  private authenticated = false;
 
   login(validate: boolean): boolean {
     if (validate) { 
