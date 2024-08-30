@@ -11,7 +11,7 @@ import { AnadirComponent } from '../anadir/anadir.component';
 import { borrarComponent } from '../borrar/borrar.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule, MatIconButton } from '@angular/material/button';
-
+import { HttpClientModule } from '@angular/common/http';
 
 export interface PeriodicElement {
   Type: string;
@@ -35,7 +35,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-administrador',
   standalone: true,
-  imports: [MatCardModule,MatDividerModule,MatListModule,MatTableModule,MatIconModule,CommonModule, MatMenuModule,MatButtonModule, MatIconButton],
+  imports: [HttpClientModule,MatCardModule,MatDividerModule,MatListModule,MatTableModule,MatIconModule,CommonModule, MatMenuModule,MatButtonModule, MatIconButton],
   templateUrl: './administrador.component.html',
   styleUrl: './administrador.component.css'
 })
@@ -70,7 +70,7 @@ export class AdministradorComponent {
 
   }
 
-  delete(){
+  deleted(){
     this.dialog.open(borrarComponent,{
       width: '20%',
       data:{}
