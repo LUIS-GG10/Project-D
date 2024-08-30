@@ -43,19 +43,19 @@
   
   button[mat-flat-button] {
     width: 80%;
-    background-color: rgb(197, 102, 73);
+    background-color: #F29F05;
     color: white;
   }
   
-  a {
-    color: rgb(122, 64, 46);
+  .FP {
+    color: #865906;
     text-decoration: none;
   }
   
    button[mat-icon-button] {
     width: 80%;
     background-color:transparent;
-    color: hsl(14, 52%, 53%);
+    color: #F29F05;
     border-color: transparent;
     padding-bottom: 20%;
   }

@@ -1,18 +1,28 @@
-mat-card{
-  background-color: beige;
+mat-card {
+  background-color: transparent; /* Cambiar beige a transparente */
   display: flex;
 }
-mat-card-content{
-  width:100%;
+
+mat-card table {
+  background-color: transparent; /* Mantener la tabla transparente */
 }
+
+mat-card table th, mat-card table td {
+  background-color: #F29F05; /* Celdas naranjas con transparencia */
+}
+
+mat-card-content {
+  width: 100%;
+}
+
 button[mat-icon-button] {
-  
-  background-color:transparent;
-  color: #f7f5f6;
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.795);
   border-color: transparent;
 }
-button[mat-menu-item]{
+
+button[mat-menu-item] {
   background-color: transparent;
   border-color: transparent;
-  color: #f7f5f6;
+  color: rgba(255, 255, 255, 0.795);
 }
